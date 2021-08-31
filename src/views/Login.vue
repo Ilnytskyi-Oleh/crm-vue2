@@ -49,6 +49,9 @@
 //непосредственно импорт валидаторов с библиотеки
 import {email, required, minLength} from 'vuelidate/lib/validators';
 
+//импорт словаря сообщений для всплвающего уведомления
+import messages from "@/utils/messages";
+
 const passwordMinLength = 6;
 export default {
   name: 'login',
@@ -61,6 +64,12 @@ export default {
     // даем те же имена моделям, что и в data и применяем правила валидации в параметрах
     email: {email, required},
     password: {required, minLength: minLength(passwordMinLength)}
+  },
+  mounted() {
+    //инициализация всплывающего сообщения
+    if (messages[this.$route.query.message]){
+      this.$message(messages[this.$route.query.message]);
+    }
   },
   methods: {
     submitHandler(){
