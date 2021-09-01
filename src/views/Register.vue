@@ -86,7 +86,7 @@ export default {
     agree:{checked: v => v},
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if(this.$v.$invalid){
         this.$v.$touch(); // активация валидации
         return;
@@ -97,10 +97,14 @@ export default {
         password: this.password,
         name: this.name
       }
-      console.log(formData);
 
+      try {
+        await this.$store.dispatch('register', formData);
+        this.$router.push('/'); // Перенаправление на главную при успешной регистрации
+      } catch (e) {
+        throw e;
+      }
 
-      this.$router.push('/'); // Перенаправление на главную при успешной регистрации
     }
   }
 }
