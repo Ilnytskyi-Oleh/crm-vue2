@@ -99,10 +99,10 @@ export default {
       }
 
       try {
-        await this.$store.dispatch('register', formData);
+        await this.$store.dispatch('register', formData); // отправка данных в Firebase и регистрация
         this.$router.push('/'); // Перенаправление на главную при успешной регистрации
       } catch (e) {
-        throw e;
+       //обработка ошибок
       }
 
     }

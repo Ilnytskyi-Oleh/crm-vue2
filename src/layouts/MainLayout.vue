@@ -29,6 +29,13 @@ export default {
   data: () =>({
     isOpen: true
   }),
+  async mounted() {
+    if(!Object.keys(this.$store.getters.info).length){  // Obj.keys(obj) возвращает масив ключей
+
+      //Запрос данных пользователя
+      await this.$store.dispatch('fetchInfo');
+    }
+  },
   components: {
     Navbar,
     Sidebar,

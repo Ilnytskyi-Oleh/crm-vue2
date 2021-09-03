@@ -16,6 +16,7 @@ export default {
           });
         })
         .catch((e) => {
+          commit('setError', e); // метод commit позволяет изменять состояние state через mutations
           throw e;
         });
     },
@@ -24,17 +25,17 @@ export default {
         await signInWithEmailAndPassword(auth, email, password)
           .then((userCredential) =>{
             const user = userCredential.user;
-            // console.log(user, dispatch, commit); // ESlint...
           })
           .catch((e) => {
+            commit('setError', e); // метод commit позволяет изменять состояние state через mutations
             throw e;
           })
     },
-    async logout(){
+    async logout({commit}){
       const auth = getAuth();
       await signOut(auth).then(() =>{
         //Разлогин успешен
-
+        commit('clearInfo');
       })
         .catch((e) => {
           throw e;

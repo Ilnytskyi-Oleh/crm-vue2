@@ -8,6 +8,7 @@ import dateFilter from '@/filters/date.filter';
 import messagePlugin from '@/utils/message.plugin';
 import './registerServiceWorker';
 import 'materialize-css/dist/js/materialize.min';
+import Loader from "@/components/app/Loader";
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
@@ -28,11 +29,12 @@ const firebaseConfig = {
 Vue.config.productionTip = false;
 Vue.use(messagePlugin);                       // Кастомный плагин для всплвающих сообщений.
 Vue.use(Vuelidate);                           // Валидация форм
+Vue.component('Loader', Loader);           // Лоадер (ну, логично)
 
 // Форматирование даты в нужный вид ( в Vue 3 это работает по другому!!!)
 Vue.filter('date', dateFilter);
 
- initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 let app;
 

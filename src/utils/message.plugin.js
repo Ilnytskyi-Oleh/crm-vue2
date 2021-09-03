@@ -10,10 +10,7 @@ export default {
     }
 
     Vue.prototype.$error = function (html) {
-      window.M.toast({html: `[Ошибка] ${html}`})
+      window.M.toast({html: `[Ошибка]: ${html}`})
     }
-
-
-    console.log(options); //Костыль для линта
   }
 }
