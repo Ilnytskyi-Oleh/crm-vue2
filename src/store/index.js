@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import auth from './auth'
 import info from "./info";
 
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -27,21 +28,29 @@ export default new Vuex.Store({
   actions: {
     //Берем курс валют с сайта НБУ
     async fetchCurrency(){
-      fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json')
+       return await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json')
         .then((response) => {
           return response.json();
         })
         .then((data) => {
-          let results = data.filter((item) =>{
+          // console.log(data);
+          let fullResults = data.filter((item) =>{
             if(['PLN','USD','EUR'].includes(item.cc))
               return item;
           })
-          console.log(results)
+          let results = [];
+          for (let item of fullResults){
+            results.push({
+              rate: item.rate,
+              cc:item.cc
+            })
+          }
+          return results
         });
     }
   },
   modules: {
     //модуль регистрации/авторизации
-    auth, info
+    auth, info,
   }
 })

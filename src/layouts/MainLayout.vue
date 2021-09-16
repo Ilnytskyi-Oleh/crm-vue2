@@ -34,6 +34,7 @@ export default {
 
       //Запрос данных пользователя
       await this.$store.dispatch('fetchInfo');
+
     }
   },
   components: {
