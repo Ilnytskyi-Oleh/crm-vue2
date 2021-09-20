@@ -12,6 +12,7 @@ export default {
     clearInfo(state){
       state.info = {} // удаляем инфо при logout
     },
+
   },
   actions: {
     async fetchInfo({dispatch, commit}, ) {
@@ -32,5 +33,6 @@ export default {
   },
   getters: {
     info: s => s.info,
+
   }
 }

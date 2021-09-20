@@ -5,6 +5,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import dateFilter from '@/filters/date.filter';
+import currencyFilter from "@/filters/currency.filter";
 import messagePlugin from '@/utils/message.plugin';
 import './registerServiceWorker';
 import 'materialize-css/dist/js/materialize.min';
@@ -13,6 +14,7 @@ import Loader from "@/components/app/Loader";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import 'firebase/database';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBStCR00m-JtGkfjdk74Iz5evuTnBwD81s",
@@ -33,6 +35,7 @@ Vue.component('Loader', Loader);           // Лоадер (ну, логично
 
 // Форматирование даты в нужный вид ( в Vue 3 это работает по другому!!!)
 Vue.filter('date', dateFilter);
+Vue.filter('currency', currencyFilter);
 
 initializeApp(firebaseConfig);
 

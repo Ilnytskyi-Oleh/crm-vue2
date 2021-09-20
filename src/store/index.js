@@ -19,7 +19,7 @@ export default new Vuex.Store({
     //Очистка ошибок
     clearError(state){
       state.error = null;
-    }
+    },
   },
   //геттеры для state.error
   getters: {
@@ -33,7 +33,6 @@ export default new Vuex.Store({
           return response.json();
         })
         .then((data) => {
-          // console.log(data);
           let fullResults = data.filter((item) =>{
             if(['PLN','USD','EUR'].includes(item.cc))
               return item;
@@ -52,5 +51,6 @@ export default new Vuex.Store({
   modules: {
     //модуль регистрации/авторизации
     auth, info,
-  }
+  },
+
 })
