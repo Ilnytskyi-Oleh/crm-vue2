@@ -11,21 +11,30 @@
             <option
             v-for="c of categories"
             :key="c.id"
+            :value="c.id"
             >{{c.title}}</option>
           </select>
           <label>Выберите категорию</label>
         </div>
 
         <div class="input-field">
-          <input type="text" id="name" />
+          <input id="name" type="text" v-model="title"
+                 :class="{invalid: ($v.title.$dirty && !$v.title.required)}"
+          />
           <label for="name">Название</label>
-          <span class="helper-text invalid">TITLE</span>
+          <span
+            v-if="$v.title.$dirty && !$v.title.required"
+            class="helper-text invalid">Введите название категории</span>
         </div>
 
         <div class="input-field">
-          <input id="limit" type="number" />
+          <input id="limit" type="number" v-model.number="limit"
+                 :class="{invalid: ($v.limit.$dirty && !$v.limit.minValue)}"
+          />
           <label for="limit">Лимит</label>
-          <span class="helper-text invalid">LIMIT</span>
+          <span
+            v-if="$v.title.$dirty && !$v.limit.minValue"
+            class="helper-text invalid">Минимальная величина {{$v.limit.$params.minValue.min}}</span>
         </div>
 
         <button class="btn waves-effect waves-light" type="submit">
@@ -38,13 +47,22 @@
 </template>
 
 <script>
+import {minValue, required} from "vuelidate/lib/validators";
+
 export  default {
   props:['categories'],
   data: () => ({
-    select: null
+    select: null,
+    title: '',
+    limit:1
   }),
+  validations: {
+    title: {required},
+    limit: {minValue: minValue(100)}
+  },
   mounted() {
     this.select = window.M.FormSelect.init(this.$refs.select);
+    window.M.updateTextFields();
   },
   destroyed() {
     if(this.select && this.select.destroy){
