@@ -5,9 +5,9 @@
         <h4>Редактировать</h4>
       </div>
 
-      <form>
-        <div class="input-field">
-          <select ref="select">
+      <form @submit.prevent = "submitHandler">
+        <div class="input-field" >
+          <select ref="select" v-model="current">
             <option
             v-for="c of categories"
             :key="c.id"
@@ -54,11 +54,25 @@ export  default {
   data: () => ({
     select: null,
     title: '',
-    limit:1
+    limit:100,
+    current: null
   }),
   validations: {
     title: {required},
     limit: {minValue: minValue(100)}
+  },
+  watch:{
+    current(catId){
+      const {title, limit} = this.categories.find(c=>c.id === catId);
+      this.title = title;
+      this.limit = limit;
+    }
+  },
+  created() {
+    const {id, title, limit} = this.categories[0];
+    this.current = id;
+    this.title = title;
+    this.limit = limit;
   },
   mounted() {
     this.select = window.M.FormSelect.init(this.$refs.select);
@@ -67,6 +81,29 @@ export  default {
   destroyed() {
     if(this.select && this.select.destroy){
       this.select.destroy();
+    }
+  },
+  methods:{
+    async submitHandler(){
+      // Проверка на валидность импутов
+      if(this.$v.$invalid){
+        this.$v.$touch()
+        return
+      }
+      const categoryData = {
+        id:this.current,
+        title: this.title,
+        limit: this.limit
+      }
+
+      try{
+        await this.$store.dispatch('updateCategory', categoryData);
+        this.$message('Категория упешно обновлена.');
+        this.$emit('updated', categoryData); //Эмитим событие обносления для обработки в родительском компоненте
+      } catch (e){
+        //
+      }
+
     }
   }
 }

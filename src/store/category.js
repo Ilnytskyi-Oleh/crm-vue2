@@ -1,5 +1,6 @@
-import { getDatabase,  ref, set, child, push, onValue, get, query} from "firebase/database";
+import { getDatabase,  ref, set, child, push, onValue, get, query, update} from "firebase/database";
 import { getAuth } from "firebase/auth";
+
 
 export default {
   actions:{
@@ -25,6 +26,15 @@ export default {
         commit('setError', e);
         throw e;
       }
+    },
+    async updateCategory({commit, dispatch}, {title, limit, id}){
+      const auth =  getAuth();
+      const userId = auth.currentUser.uid;
+      const db = getDatabase();
+      const updates = {};
+      updates[`users/${userId}/categories/${id}`] = {title, limit};
+      return await update(ref(db), updates);
+
     },
     async createCategory({commit, dispatch},{title, limit}){
       try{
