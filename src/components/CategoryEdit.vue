@@ -90,6 +90,7 @@ export  default {
         this.$v.$touch()
         return
       }
+
       const categoryData = {
         id:this.current,
         title: this.title,
@@ -103,7 +104,6 @@ export  default {
       } catch (e){
         //
       }
-
     }
   }
 }
