@@ -20,7 +20,7 @@ export default {
         const db = getDatabase();
         const auth = getAuth();
         const userId = auth.currentUser.uid;
-        const updateData = {...this.getters.info, ...toUpdate} //??
+        const updateData = {...this.getters.info, ...toUpdate} // как то работает...
         const updates = {};
         updates[`users/${userId}/info`] = updateData;
         await update(ref(db), updates);
@@ -50,6 +50,5 @@ export default {
   },
   getters: {
     info: s => s.info,
-
   }
 }
