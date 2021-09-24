@@ -1,4 +1,4 @@
-import { getDatabase,ref,onValue} from "firebase/database";
+import {getDatabase, ref, onValue, update} from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 export default {
@@ -15,7 +15,24 @@ export default {
 
   },
   actions: {
-    async fetchInfo({dispatch, commit}, ) {
+    async updateInfo({dispatch, commit}, toUpdate){
+      try{
+        const db = getDatabase();
+        const auth = getAuth();
+        const userId = auth.currentUser.uid;
+        const updateData = {...this.getters.info, ...toUpdate} //??
+        const updates = {};
+        updates[`users/${userId}/info`] = updateData;
+        await update(ref(db), updates);
+        commit('setInfo', updateData);
+      }catch (e){
+        //
+        commit('setError', e);
+        throw e;
+      }
+
+    },
+    async fetchInfo({dispatch, commit} ) {
       try{
         const db = getDatabase();
         const auth = getAuth();

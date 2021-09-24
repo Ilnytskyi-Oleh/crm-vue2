@@ -107,13 +107,25 @@ export default {
 
       if(this.canCreateRecord){
         try{
-          await this.$store.dispatch('createRecord', {
-            categoryId: this.category,
-            amount: this.amount,
-            description: this.description,
-            type: this.type,
-            date: new Date().toJSON()
-          });
+          let record = await this.$store.dispatch('createRecord', {
+                        categoryId: this.category,
+                        amount: this.amount,
+                        description: this.description,
+                        type: this.type,
+                        date: new Date().toJSON()
+                      });
+          //обновляем счет после создания рекорда
+          const bill = this.type === "income"
+            ? this.info.bill + this.amount
+            : this.info.bill - this.amount;
+
+          await this.$store.dispatch('updateInfo', {bill});
+          this.$message("Запись успешно создана");
+
+          //обнуляем поля формы
+          this.$v.$reset();
+          this.amount = 1;
+          this.description='';
         } catch (e){
           //
           }

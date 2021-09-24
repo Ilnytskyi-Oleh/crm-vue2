@@ -8,7 +8,9 @@ export default {
         const auth = await getAuth();
         const userId = auth.currentUser.uid;
         const db = getDatabase();
-
+        const newRecordKey = push(child(ref(db), `users/${userId}/records`)).key;
+        await set(ref(db, `users/${userId}/records/${newRecordKey}`), record);
+        return {id:newRecordKey};
       } catch (e){
         //
         commit('setError', e);
