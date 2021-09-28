@@ -39,6 +39,27 @@ export default {
         commit('setError', e);
         throw e;
       }
+    },
+    async fetchRecordById({commit}, id){
+      try{
+        const auth = getAuth();
+        const userId = auth.currentUser.uid;
+
+        const dbRef = ref(getDatabase());
+        return await get(child(dbRef, 'users/' + userId + '/records/' + id)).then((snapshot) => {
+          if (snapshot.exists()) {
+            let obj =   snapshot.val() || {};
+            return {...obj, id: id};
+          } else {
+            console.log("No data available");
+          }
+        }).catch((error) => {
+          console.error(error);
+        });
+      } catch (e){
+        commit('setError', e);
+        throw e;
+      }
     }
   }
 }

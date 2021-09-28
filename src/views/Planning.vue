@@ -29,6 +29,7 @@
 </template>
 <script>
 import {mapGetters} from "vuex";
+import currencyFilter from "@/filters/currency.filter";
 
 export default {
   name: 'planning',
@@ -44,7 +45,8 @@ export default {
     const categories = await this.$store.dispatch('fetchCategories');
 
     this.categories = categories.map(cat => {
-      //количество денег потраченное в рмках даной категории
+
+      //количество денег потраченное в рамках даной категории
       const spend = records
       .filter(r=>r.categoryId === cat.id)
       .filter(r => r.type === 'outcome')
@@ -55,7 +57,6 @@ export default {
       const percent = (100 * spend) / cat.limit;
       const progressPercent = (percent > 100) ? 100 : percent;
 
-
       const progressColor = percent < 60
         ? 'green'
         : percent < 100
@@ -63,7 +64,7 @@ export default {
           : 'red';
 
       const tooltipValue = cat.limit - spend;
-      const tooltip = `${tooltipValue < 0 ? 'Превышение на' :  'Осталось'} ${Math.abs(tooltipValue)}`
+      const tooltip = `${tooltipValue < 0 ? 'Превышение на' :  'Осталось'} ${currencyFilter(Math.abs(tooltipValue))}`
 
       return {
         ...cat,

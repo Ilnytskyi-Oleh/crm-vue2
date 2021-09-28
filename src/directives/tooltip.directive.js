@@ -1,6 +1,9 @@
+
+
 export default {
   bind(el, {value}){
-    window.M.Tooltip.init(el, {html:value});
+    //закостылено для посвления тултипа сверху кнопки добавления новой записи
+    window.M.Tooltip.init(el, {html:(value['value'] || value), position: value['position']});
   },
   unbind(el){
     const tooltip =  window.M.Tooltip.getInstance(el);
