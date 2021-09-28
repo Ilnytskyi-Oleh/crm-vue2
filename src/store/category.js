@@ -12,7 +12,7 @@ export default {
         const dbRef = ref(getDatabase());
         return await get(child(dbRef, 'users/' + userId + '/categories')).then((snapshot) => {
           if (snapshot.exists()) {
-            let obj =   snapshot.val();
+            let obj =   snapshot.val() || {};
 
             //магия JS
             return Object.keys(obj).map(key => ({...obj[key], id: key}));
