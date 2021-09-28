@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div>
+    <Loader v-if="loading"/>
+    <div v-else-if="record">
       <div class="breadcrumb-wrap">
         <a href="/history" class="breadcrumb">История</a>
         <a class="breadcrumb"> Расход </a>
@@ -20,6 +21,7 @@
         </div>
       </div>
     </div>
+    <p class="center" v-else>Такой записи нет</p>
   </div>
 </template>
 
