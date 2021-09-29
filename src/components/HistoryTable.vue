@@ -13,7 +13,7 @@
 
     <tbody>
     <tr v-for="(record, idx) of records" :key="record.id">
-      <td>{{ idx + 1}}</td>
+      <td>{{ (idx + 1) + ((page - 1) * pageSize ) }}</td>
       <td>{{record.amount | currency()}}</td>
       <td>{{record.date | date('datetime')}}</td>
       <td>{{record.categoryName}}</td>
@@ -42,6 +42,12 @@ export default {
     records:{
       required: true,
       type: Array
+    },
+    page:{
+      required: true,
+    },
+    pageSize:{
+      required: true,
     }
   }
 }

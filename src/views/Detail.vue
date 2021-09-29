@@ -4,7 +4,7 @@
     <div v-else-if="record">
       <div class="breadcrumb-wrap">
         <a href="/history" class="breadcrumb">История</a>
-        <a class="breadcrumb"> Расход </a>
+        <a class="breadcrumb"> {{(record.typeClass === 'green') ? 'Доход' : 'Расход'}} </a>
       </div>
       <div class="row">
         <div class="col s12 m6">
@@ -12,13 +12,22 @@
           :class="[record.typeClass]"
           >
             <div class="card-content white-text">
-              <p>Описание:</p>
-              <p>Сумма:</p>
-              <p>Категория:</p>
-              <small>12.12.12</small>
+              <p>Описание: {{record.description}}</p>
+              <p>Сумма: {{record.amount | currency()}}</p>
+              <p>Категория: {{record.categoryName}}</p>
+              <small>{{record.date | date('datetime')}}</small>
             </div>
           </div>
         </div>
+      </div>
+      <div class="row ">
+        <div class="col s2">
+          <button class="btn waves-effect waves-light auth-submit" @click.prevent="$router.go(-1)">
+            Назад
+            <i class="material-icons left">chevron_left</i>
+          </button>
+        </div>
+
       </div>
     </div>
     <p class="center" v-else>Такой записи нет</p>
