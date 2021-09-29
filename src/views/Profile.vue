@@ -6,7 +6,7 @@
 
     <form class="form">
       <div class="input-field">
-        <input id="description" type="text" />
+        <input id="description" type="text" :value="name"/>
         <label for="description">Имя</label>
         <span class="helper-text invalid">name</span>
       </div>
@@ -18,3 +18,28 @@
     </form>
   </div>
 </template>
+
+<script>
+import { required} from "vuelidate/lib/validators";
+export default {
+  name: 'profile',
+  computed:{
+    name(){
+     return  this.$store.getters.info.name;
+    }
+  },
+  watch:{
+    name(){
+      this.$nextTick(()=>{
+        window.M.updateTextFields();
+      })
+    }
+  },
+   mounted() {
+     window.M.updateTextFields();
+  },
+  validations: {
+    name: {required},
+  }
+}
+</script>
