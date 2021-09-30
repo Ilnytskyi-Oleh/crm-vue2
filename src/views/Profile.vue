@@ -4,7 +4,7 @@
       <h3>{{'ProfileTitle' | localize}}</h3>
     </div>
 
-    <Loader v-if="!name" />
+    <Loader v-if="(name == null)" />
 
     <form class="form" @submit.prevent="submitHandler" v-else>
       <div class="input-field">
@@ -13,13 +13,13 @@
                v-model="name"
                :class="{invalid: ($v.name.$dirty && !$v.name.required) || ($v.name.$dirty && !$v.name.minLength)}"
         />
-        <label for="description">Имя</label>
+        <label for="description">{{ 'Name' | localize }}</label>
         <span
           v-if="$v.name.$dirty &&  !$v.name.minLength"
-          class="helper-text invalid">Поле Имя не может быть меньше 4 символов</span>
+          class="helper-text invalid">{{'NameIsSmall' | localize}}</span>
         <span
           v-else-if="$v.name.$dirty &&  !$v.name.required"
-          class="helper-text invalid">Поле Имя не может быть пустым</span>
+          class="helper-text invalid">{{'TypeName' | localize}}</span>
       </div>
       <div class="switch">
         <label>
@@ -30,7 +30,7 @@
         </label>
       </div>
       <button class="btn waves-effect waves-light" type="submit">
-        Обновить
+        {{ "Update" | localize }}
         <i class="material-icons right">send</i>
       </button>
     </form>
@@ -50,7 +50,7 @@ import {mapGetters} from "vuex";
 export default {
   name: 'profile',
   data:()=>({
-    name:'',
+    name:null,
     isRuLocale: true
   }),
   computed: {

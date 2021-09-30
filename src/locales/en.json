@@ -1,3 +1,7 @@
 {
-  "ProfileTitle": "Profile"
+  "ProfileTitle": "Profile",
+  "Name": "Name",
+  "TypeName": "Name cannot be empty",
+  "NameIsSmall": "Name cannot be less than 4 symbols",
+  "Update": "Update"
 }

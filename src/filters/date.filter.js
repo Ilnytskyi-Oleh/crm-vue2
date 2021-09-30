@@ -1,3 +1,5 @@
+import store from '../store'
+
 export default function dateFilter(value, format = 'date'){
 
   const options = {};
@@ -14,5 +16,6 @@ export default function dateFilter(value, format = 'date'){
     options.second = 'numeric';
   }
 
-  return new Intl.DateTimeFormat('uk', options).format(new Date(value))
+  const locale = store.getters.info.locale || 'en-US'
+  return new Intl.DateTimeFormat(locale, options).format(new Date(value))
 }
