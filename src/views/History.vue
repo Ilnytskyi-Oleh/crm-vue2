@@ -52,8 +52,6 @@ export default {
     const categories = await this.$store.dispatch('fetchCategories');
 
     this.setup(categories, this.records); // отрисовка графика и активация пагинации
-    console.log((this.records.filter(r=>r.type==='outcome'))
-      .map(r=>r.categoryId).filter((v, i, a) => a.indexOf(v) === i))
     this.loading = false;
   },
   methods:{

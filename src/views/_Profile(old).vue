@@ -1,32 +1,30 @@
 <template>
   <div>
     <div class="page-title">
-      <h3>{{'ProfileTitle' | localize}}</h3>
+      <h3>Профиль</h3>
     </div>
 
-    <Loader v-if="!name" />
-
-    <form class="form" @submit.prevent="submitHandler" v-else>
+    <form class="form" @submit.prevent="submitHandler">
       <div class="input-field">
         <input id="description" type="text"
                ref="newname"
-               v-model="name"
-               :class="{invalid: ($v.name.$dirty && !$v.name.required) || ($v.name.$dirty && !$v.name.minLength)}"
+               v-model="newname"
+               :class="{invalid: ($v.newname.$dirty && !$v.newname.required) || ($v.newname.$dirty && !$v.newname.minLength)}"
         />
         <label for="description">Имя</label>
         <span
-          v-if="$v.name.$dirty &&  !$v.name.minLength"
+          v-if="$v.newname.$dirty &&  !$v.newname.minLength"
           class="helper-text invalid">Поле Имя не может быть меньше 4 символов</span>
         <span
-          v-else-if="$v.name.$dirty &&  !$v.name.required"
+          v-else-if="$v.newname.$dirty &&  !$v.newname.required"
           class="helper-text invalid">Поле Имя не может быть пустым</span>
       </div>
       <div class="switch">
         <label>
-          English
-          <input type="checkbox" v-model="isRuLocale">
+          Инглиш
+          <input type="checkbox">
           <span class="lever"></span>
-          Русский
+          Russian
         </label>
       </div>
       <button class="btn waves-effect waves-light" type="submit">
@@ -49,28 +47,29 @@ import {mapGetters} from "vuex";
 
 export default {
   name: 'profile',
-  data:()=>({
-    name:'',
-    isRuLocale: true
-  }),
+  data(){
+    return{
+      newname: null
+    }
+  },
   computed: {
-   ...mapGetters(['info'])
+    name(){
+      return this.$store.getters.info.name;
+    }
   },
   watch:{
-    info(){
-      this.name = this.info.name
-      this.isRuLocale = this.info.locale === 'ru-RU'
+    name(name){
+      this.newname = name
       this.$nextTick(()=>{
         window.M.updateTextFields();
       })
-    }
+    },
   },
   async mounted() {
-     this.name = this.info.name
-    this.isRuLocale = this.info.locale === 'ru-RU'
-     this.$nextTick(()=>{
-       window.M.updateTextFields();
-     })
+    this.newname = this.name
+    this.$nextTick(()=>{
+      window.M.updateTextFields();
+    })
   },
   methods:{
     async submitHandler() {
@@ -78,14 +77,11 @@ export default {
         this.$v.$touch(); // активация валидации
         return;
       }
-
+      let name = this.newname;
 
       try {
-        await this.$store.dispatch('updateInfo', {
-          name: this.name,
-          locale: this.isRuLocale ? 'ru-RU' : 'en-US'
-        });
-        this.$message('Данные профиля обновлены!')
+        await this.$store.dispatch('updateInfo', {name}); // отправка данных в Firebase и регистрация
+        this.$message('Имя успешно обновлено!')
       } catch (e) {
         //обработка ошибок
       }
@@ -93,7 +89,7 @@ export default {
     }
   },
   validations: {
-    name: {required, minLength: minLength(4)},
+    newname: {required, minLength: minLength(4)},
   }
 }
 </script>

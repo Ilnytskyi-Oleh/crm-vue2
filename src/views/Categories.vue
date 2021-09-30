@@ -20,6 +20,7 @@
   </div>
 </template>
 <script>
+
 import CategoryCreate from "@/components/CategoryCreate";
 import CategoryEdit from "@/components/CategoryEdit";
 
@@ -37,7 +38,6 @@ export default {
   methods:{
     addNewCategory(category){
       this.categories.push(category);
-      // console.log(this.categories)
     },
     updateCategories(category){
       const idx = this.categories.findIndex(c=>c.id === category.id);

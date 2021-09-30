@@ -7,6 +7,7 @@ import router from './router';
 import store from './store';
 import dateFilter from '@/filters/date.filter';
 import currencyFilter from "@/filters/currency.filter";
+import localizeFilter from "@/filters/localize.filter";
 import tooltipDirective from "@/directives/tooltip.directive";
 import messagePlugin from '@/utils/message.plugin';
 import './registerServiceWorker';
@@ -39,6 +40,7 @@ Vue.component('Paginate', Paginate);       // Пагинатор
 // Форматирование даты в нужный вид ( в Vue 3 это работает по другому!!!)
 Vue.filter('date', dateFilter);
 Vue.filter('currency', currencyFilter);
+Vue.filter('localize', localizeFilter);
 
 //регистрация директив
 Vue.directive('tooltip', tooltipDirective);
