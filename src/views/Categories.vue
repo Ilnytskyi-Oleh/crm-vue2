@@ -14,7 +14,7 @@
         :categories = "categories"
         @updated = "updateCategories"
       />
-        <p v-else class="center">Категорий пока нет</p>
+        <p v-else class="center"> {{ "NoCategories" | localize }}</p>
       </div>
     </section>
   </div>

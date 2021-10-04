@@ -1,7 +1,7 @@
 <template>
   <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
-      <span class="card-title">Домашняя бухгалтерия</span>
+      <span class="card-title">{{"HomeBookkeeping" | localize}}</span>
       <div class="input-field">
         <input id="email" type="text"
                v-model.trim="email"
@@ -20,26 +20,26 @@
                v-model.trim="password"
                :class="{invalid: ($v.password.$dirty && !$v.password.required) || ($v.email.$dirty && !$v.password.minLength)}"
         />
-        <label for="password">Пароль. (Мин {{passwordMinLength}} символов.)</label>
+        <label for="password">{{"Password" | localize(passwordMinLength)}}</label>
         <small
           v-if="$v.password.$dirty && !$v.password.required"
-          class="helper-text invalid">Поле Пароль не может быть пустым</small>
+          class="helper-text invalid">{{ "PasswordCannotBeEmpty" | localize }}</small>
         <small
           v-else-if="$v.password.$dirty && !$v.password.minLength"
-          class="helper-text invalid">Пароль должен быть не менее {{passwordMinLength}} символов.</small>
+          class="helper-text invalid">{{"PasswordCannotBeLess" | localize(passwordMinLength)}}</small>
       </div>
     </div>
     <div class="card-action">
       <div>
         <button class="btn waves-effect waves-light auth-submit" type="submit">
-          Войти
+          {{"LogIn" | localize}}
           <i class="material-icons right">send</i>
         </button>
       </div>
 
       <p class="center">
-        Нет аккаунта?
-        <router-link to="/register" >Зарегистрироваться</router-link>
+        {{"NoAcc" | localize}}
+        <router-link to="/register" >{{"SingUp" | localize}}</router-link>
       </p>
     </div>
   </form>

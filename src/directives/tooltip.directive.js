@@ -2,7 +2,7 @@
 
 export default {
   bind(el, {value}){
-    //закостылено для посвления тултипа сверху кнопки добавления новой записи
+    //закостылено для появления тултипа сверху кнопки добавления новой записи
     window.M.Tooltip.init(el, {html:(value['value'] || value), position: value['position']});
   },
   unbind(el){

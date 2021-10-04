@@ -1,9 +1,10 @@
 // Словарь сообщений
+import localizeFilter from "@/filters/localize.filter";
 
 export default {
-  'logout': 'Вы вышли из системы.',
-  'login': 'Для начала войдите в систему',
-  'auth/user-not-found': 'Пользователь не найден.',
-  'auth/wrong-password': 'Неправильный логин или пароль.',
-  'auth/email-already-in-use': 'Даный email уже используется.'
+  'logout': localizeFilter("YouLogOut"),
+  'login': localizeFilter("FirstEnterToAcc"),
+  'auth/user-not-found': localizeFilter("UserNotFound"),
+  'auth/wrong-password': localizeFilter("InvalidCredentials"),
+  'auth/email-already-in-use': localizeFilter("EmailIsUsing"),
 }

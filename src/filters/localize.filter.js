@@ -7,7 +7,13 @@ const locales = {
   'en-US':en,
 }
 
-export default function localizeFilter(key){
+export default  function localizeFilter(key, ...args){
   const locale =  store.getters.info.locale || 'ru-RU';
-  return locales[locale][key] || `[Localize error]: key ${key} not found`;
+  let localized = locales[locale][key] || `[Localize error]: key ${key} not found`;
+
+  if (args && locales[locale][key]) {
+    args.forEach(arg => localized = localized.replace('%slot%', arg))
+    return localized
+  }
+  return localized
 }

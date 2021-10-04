@@ -1,7 +1,7 @@
 <template>
   <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
-      <span class="card-title">Домашняя бухгалтерия</span>
+      <span class="card-title">{{"HomeBookkeeping" |localize}}</span>
       <div class="input-field">
         <input id="email" type="text"
                v-model.trim="email"
@@ -10,52 +10,52 @@
         <label for="email">Email</label>
         <small
           v-if="$v.email.$dirty && !$v.email.required"
-          class="helper-text invalid">Поле Email не может быть пустым</small>
+          class="helper-text invalid">{{"EmailCannotBeEmpty" | localize}}</small>
         <small
           v-else-if="$v.email.$dirty && !$v.email.email"
-          class="helper-text invalid">Некорректный Email</small>
+          class="helper-text invalid">{{"InvalidEmail" | localize}}</small>
       </div>
       <div class="input-field">
         <input id="password" type="password"
                v-model.trim="password"
                :class="{invalid: ($v.password.$dirty && !$v.password.required) || ($v.email.$dirty && !$v.password.minLength)}"
         />
-        <label for="password">Пароль. (Мин {{passwordMinLength}} символов.)</label>
+        <label for="password">{{"PasswordCannotBeLess" | localize}}</label>
         <small
           v-if="$v.password.$dirty && !$v.password.required"
-          class="helper-text invalid">Поле Пароль не может быть пустым</small>
+          class="helper-text invalid">{{"PasswordCannotBeEmpty" | localize}}</small>
         <small
           v-else-if="$v.password.$dirty && !$v.password.minLength"
-          class="helper-text invalid">Пароль должен быть не менее {{passwordMinLength}} символов.</small>
+          class="helper-text invalid">{{"PasswordCannotBeLess" | localize}}</small>
       </div>
       <div class="input-field">
         <input id="name" type="text"
                v-model.trim="name"
                :class="{invalid: ($v.name.$dirty && !$v.name.required)}"
         />
-        <label for="name">Имя</label>
+        <label for="name">{{"Name" | localize}}</label>
         <small
           v-if="$v.name.$dirty && !$v.name.required"
-          class="helper-text invalid">Поле Name не может быть пустым</small>
+          class="helper-text invalid">{{"NameCannotBeEmpty" | localize}}</small>
       </div>
       <p>
         <label>
           <input  type="checkbox" v-model="agree"/>
-          <span>С правилами согласен</span>
+          <span>{{"Agree" | localize}}</span>
         </label>
       </p>
     </div>
     <div class="card-action">
       <div>
         <button class="btn waves-effect waves-light auth-submit" type="submit" >
-          Зарегистрироваться
+          {{"SingUp" | localize}}
           <i class="material-icons right">send</i>
         </button>
       </div>
 
       <p class="center">
-        Уже есть аккаунт?
-        <router-link to="/login">Войти!</router-link>
+          {{"DoUHaveAcc" | localize}}
+        <router-link to="/login">{{"LogIn" | localize}}</router-link>
       </p>
     </div>
   </form>

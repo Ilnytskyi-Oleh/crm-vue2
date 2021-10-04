@@ -6,6 +6,7 @@
 
 <script>
 import messages from "@/utils/messages"; // импорт словаря сообщений
+import localizeFilter from "@/filters/localize.filter";
 
 
 export default {
@@ -19,7 +20,7 @@ export default {
     // отслеживание измениений в computed.error()
     error(fireBaseError){
       console.log(fireBaseError.code);
-      this.$error(messages[fireBaseError.code] || 'Что-то пошло не так');
+      this.$error(messages[fireBaseError.code] || localizeFilter("WentWrong"));
     }
   }
 }

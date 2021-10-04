@@ -46,6 +46,7 @@
 <script>
 import { required, minLength} from "vuelidate/lib/validators";
 import {mapGetters} from "vuex";
+import localizeFilter from "@/filters/localize.filter";
 
 export default {
   name: 'profile',
@@ -85,7 +86,7 @@ export default {
           name: this.name,
           locale: this.isRuLocale ? 'ru-RU' : 'en-US'
         });
-        this.$message('Данные профиля обновлены!')
+        this.$message(localizeFilter("InfoUpdated"))
       } catch (e) {
         //обработка ошибок
       }

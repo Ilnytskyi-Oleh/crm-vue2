@@ -3,8 +3,8 @@
     <Loader v-if="loading"/>
     <div v-else-if="record">
       <div class="breadcrumb-wrap">
-        <a href="/history" class="breadcrumb">История</a>
-        <a class="breadcrumb"> {{(record.typeClass === 'green') ? 'Доход' : 'Расход'}} </a>
+        <a href="/history" class="breadcrumb">{{"History" | localize}}</a>
+        <a class="breadcrumb"> {{type}} </a>
       </div>
       <div class="row">
         <div class="col s12 m6">
@@ -23,18 +23,20 @@
       <div class="row ">
         <div class="col s2">
           <button class="btn waves-effect waves-light auth-submit" @click.prevent="$router.go(-1)">
-            Назад
+            {{ "GoBack" | localize }}
             <i class="material-icons left">chevron_left</i>
           </button>
         </div>
 
       </div>
     </div>
-    <p class="center" v-else>Такой записи нет</p>
+    <p class="center" v-else>{{"NoSuchRecord" | localize}}</p>
   </div>
 </template>
 
 <script>
+
+import localizeFilter from "@/filters/localize.filter";
 
 export default {
   name: 'detail',
@@ -42,6 +44,14 @@ export default {
     record: null,
     loading: true,
   }),
+  computed:{
+    type(){
+      if(this.record.typeClass === 'green'){
+        return localizeFilter("Income")
+      }
+      return localizeFilter("Outcome")
+    }
+  },
   async mounted(){
     const id =  this.$route.params.id;
     const record = await this.$store.dispatch('fetchRecordById', id);
